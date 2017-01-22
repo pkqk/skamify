@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>SKAMify</title>
+</head>
+<body>
+
+<input type="file" id="bilde">
+<div id="dag"></div>
+
+<script>
+function skamify(e) {
+  var image = this.files[0];
+  if (image && image.type.match('image/*')) {
+    var reader = new FileReader();
+    var dag = document.getElementById('dag');
+    reader.onloadend = function(e) {
+      var img = new Image();
+      img.onload = function() {
+        var width = 1024;
+        var height = img.height/img.width * width;
+        var canvas = document.createElement('canvas');
+        canvas.setAttribute('id', 'image');
+        canvas.width = width;
+        canvas.height = height;
+        var cxt = canvas.getContext('2d');
+        cxt.drawImage(this, 0, 0, img.width, img.height, 0, 0, width, height);
+        cxt.fillStyle = 'yellow';
+        cxt.font = '242px sans-serif';
+        cxt.textBaseline = 'hanging';
+        cxt.fillText("SØNDAG", -10, -40);
+        cxt.font = '100 242px sans-serif';
+        cxt.fillText("15:22", -10, 300);
+        if (dag.firstChild) { dag.removeChild(dag.firstChild); }
+        dag.appendChild(canvas);
+      }
+      img.src = e.target.result;
+    }
+    reader.readAsDataURL(image);
+  }
+}
+if (window.File && window.FileReader && window.FileList && window.Blob) {
+  document.getElementById('bilde').addEventListener('change', skamify, false);
+}
+</script>
+
+</body>
+</html>

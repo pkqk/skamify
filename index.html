@@ -4,17 +4,44 @@
   <meta charset="utf-8">
   <title>SKAMify</title>
   <style>
-    #download { display: none; }
-    #download.generated { display: inline; }
+    body {
+      background: #aaa;
+    }
+    .dostuff {
+      margin: 10px 0;
+      padding: 10px 0;
+    }
+    main {
+      background: #eee;
+      max-width: 1024px;
+      margin: 0 auto;
+      height: 100%;
+      min-height: 1024px;
+    }
+    #download.hidden {
+      display: none;
+    }
+    #download {
+      text-transform: uppercase;
+      font-family: sans-serif;
+      text-decoration: none;
+      color: yellow;
+      background: #aaa;
+      border: 1px solid yellow;
+      padding: 4px;
+      margin: 10px 10px;
+    }
   </style>
 </head>
 <body>
 
-<div>
-<input type="file" id="bilde">
-<a id="download" download="skam.jpg">Download</a>
-</div>
-<div id="dag"></div>
+<main>
+  <div class="dostuff">
+    <input type="file" id="bilde">
+    <a class="hidden" id="download" download="skam.jpg" href="/">Download</a>
+  </div>
+  <div id="dag"></div>
+</main>
 
 <script>
 
@@ -35,7 +62,7 @@ function hvaDag(cxt) {
 function showDownload(canvas) {
   var download = document.getElementById("download");
   download.setAttribute("href", canvas.toDataURL('image/jpeg', 1));
-  download.setAttribute("class", "generated");
+  download.classList.remove("hidden");
 }
 
 function skamify(e) {

@@ -3,13 +3,41 @@
 <head>
   <meta charset="utf-8">
   <title>SKAMify</title>
+  <style>
+    #download { display: none; }
+    #download.generated { display: inline; }
+  </style>
 </head>
 <body>
 
+<div>
 <input type="file" id="bilde">
+<a id="download" download="skam.jpg">Download</a>
+</div>
 <div id="dag"></div>
 
 <script>
+
+function hvaDag(cxt) {
+  var date = new Date();
+  var dayName = [
+    "SØNDAG", "MANDAG", "TIRSDAG", "ONSDAG", "TORSDAG", "FREDAG", "LØRDAG"
+  ][date.getDay()];
+  var time = date.toISOString().split('T')[1].split(':', 2).join(':')
+  cxt.fillStyle = 'yellow';
+  cxt.font = '900 238px sans-serif';
+  cxt.textBaseline = 'hanging';
+  cxt.fillText(dayName, -10, -40);
+  cxt.font = '100 350px sans-serif';
+  cxt.fillText(time, -10, 130);
+}
+
+function showDownload(canvas) {
+  var download = document.getElementById("download");
+  download.setAttribute("href", canvas.toDataURL('image/jpeg', 1));
+  download.setAttribute("class", "generated");
+}
+
 function skamify(e) {
   var image = this.files[0];
   if (image && image.type.match('image/*')) {
@@ -26,14 +54,10 @@ function skamify(e) {
         canvas.height = height;
         var cxt = canvas.getContext('2d');
         cxt.drawImage(this, 0, 0, img.width, img.height, 0, 0, width, height);
-        cxt.fillStyle = 'yellow';
-        cxt.font = '242px sans-serif';
-        cxt.textBaseline = 'hanging';
-        cxt.fillText("SØNDAG", -10, -40);
-        cxt.font = '100 242px sans-serif';
-        cxt.fillText("15:22", -10, 300);
+        hvaDag(cxt);
         if (dag.firstChild) { dag.removeChild(dag.firstChild); }
         dag.appendChild(canvas);
+        showDownload(canvas);
       }
       img.src = e.target.result;
     }

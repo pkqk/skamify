@@ -78,7 +78,7 @@ function skamify(e) {
         var canvas = document.createElement('canvas');
         canvas.setAttribute('id', 'image');
         canvas.width = width;
-        canvas.height = height;
+        canvas.height = 9*width/16;
         var cxt = canvas.getContext('2d');
         cxt.drawImage(this, 0, 0, img.width, img.height, 0, 0, width, height);
         hvaDag(cxt);

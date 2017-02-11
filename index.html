@@ -53,7 +53,7 @@ function hvaDag(cxt) {
   var dayName = [
     "SØNDAG", "MANDAG", "TIRSDAG", "ONSDAG", "TORSDAG", "FREDAG", "LØRDAG"
   ][date.getDay()];
-  var time = date.toLocaleTimeString(hour12: false).split(':', 2).join(':');
+  var time = date.toLocaleTimeString({hour12: false}).split(':', 2).join(':');
   cxt.fillStyle = 'yellow';
   cxt.font = '900 238px sans-serif';
   cxt.textBaseline = 'top';
